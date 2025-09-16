@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apollo + Apify Lead Generation</title>
+    <title>Lead Generation - Apollo AI</title>
     <style>
         * {
             margin: 0;
@@ -13,46 +13,50 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #fbbb90 0%, #f39c12 100%);
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 50%, #ffeaa7 100%);
             min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            padding: 20px;
         }
         
         .form-container {
-            width: 100%;
-            max-width: 500px;
             background: white;
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
         }
         
-        .form-header {
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fbb900 0%, #e6a600 100%);
+        }
+        
+        .header {
             text-align: center;
             margin-bottom: 30px;
         }
         
-        .form-header h3 {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 10px;
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
         
-        .form-header p {
-            color: #666;
-            font-size: 1rem;
+        .header p {
+            color: #7f8c8d;
+            font-size: 16px;
         }
         
         .form-group {
@@ -61,80 +65,71 @@
         
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            color: #2c3e50;
             font-weight: 600;
-            color: #333;
-            font-size: 0.95rem;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
         
         .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
             padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
             font-size: 16px;
             transition: all 0.3s ease;
-            background: #fafafa;
-            font-family: inherit;
+            background: #f8f9fa;
         }
         
         .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group select:focus {
             outline: none;
-            border-color: #fbbb90;
+            border-color: #fbb900;
             background: white;
-            box-shadow: 0 0 0 3px rgba(251, 187, 144, 0.1);
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
+            box-shadow: 0 0 0 3px rgba(251, 185, 0, 0.1);
         }
         
         .submit-btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #fbbb90 0%, #f39c12 100%);
+            padding: 16px;
+            background: linear-gradient(135deg, #fbb900 0%, #e6a600 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            position: relative;
         }
         
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(251, 187, 144, 0.3);
+            box-shadow: 0 10px 20px rgba(251, 185, 0, 0.3);
         }
         
         .submit-btn:disabled {
-            opacity: 0.7;
+            background: #bdc3c7;
             cursor: not-allowed;
+            transform: none;
         }
         
         .loading {
             display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            text-align: center;
+            margin-top: 20px;
         }
         
         .spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid transparent;
-            border-top: 3px solid white;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #fbb900;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
         }
         
         @keyframes spin {
@@ -144,219 +139,170 @@
         
         .success-message {
             display: none;
+            text-align: center;
+            padding: 20px;
             background: #d4edda;
             color: #155724;
-            padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .error-message {
+            display: none;
             text-align: center;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8d7da;
+            color: #721c24;
+            border-radius: 10px;
+            margin-top: 20px;
         }
         
-        .success-message h4 {
-            margin-bottom: 10px;
+        .feature-list {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
         }
         
-        @media (max-width: 480px) {
-            .form-container {
-                padding: 30px 25px;
-            }
-            
-            .form-header h3 {
-                font-size: 1.7rem;
-            }
+        .feature-item {
+            text-align: center;
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .feature-item i {
+            font-size: 24px;
+            color: #fbb900;
+            margin-bottom: 8px;
+        }
+        
+        .feature-item span {
+            display: block;
+            font-size: 12px;
+            color: #7f8c8d;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            
-            <div class="success-message" id="successMessage">
-                <h4>🎉 Başarılı!</h4>
-                <p>Lead generation talebiniz başarıyla n8n sistemine gönderildi. Apollo ve Apify aktif!</p>
-            </div>
-
-            <div id="formSection">
-                <div class="form-header">
-                    <h3>Apollo + Apify Lead Generation</h3>
-                    <p>Describe the types of leads you are trying to find.</p>
-                </div>
-                
-                <!-- DIRECT FORM SUBMISSION - Your N8N Webhook -->
-                <form 
-                    method="POST" 
-                    action="https://neuromexago.app.n8n.cloud/form/ba6e9c2d-ed5d-45f0-98c9-9a1c39496dd6" 
-                    target="hiddenFrame"
-                    onsubmit="handleFormSubmit()"
-                    accept-charset="UTF-8"
-                    enctype="application/x-www-form-urlencoded"
-                >
-                    <div class="form-group">
-                        <label for="jobTitle">Job Title</label>
-                        <input 
-                            type="text" 
-                            id="jobTitle"
-                            name="Job Title"
-                            placeholder="Founder, Engineer, Owner" 
-                            required
-                        >
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="companySize">Company Size</label>
-                        <select id="companySize" name="Company Size" required>
-                            <option value="">Select an option ...</option>
-                            <option value="1-10">1-10 employees</option>
-                            <option value="11-50">11-50 employees</option>
-                            <option value="51-200">51-200 employees</option>
-                            <option value="201-500">201-500 employees</option>
-                            <option value="501-1000">501-1000 employees</option>
-                            <option value="1001-5000">1001-5000 employees</option>
-                            <option value="5000+">5000+ employees</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="keywords">Keywords</label>
-                        <textarea 
-                            id="keywords"
-                            name="Keywords"
-                            placeholder="Keywords relevant to the contact or company"
-                            rows="3"
-                        ></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="location">Location</label>
-                        <input 
-                            type="text" 
-                            id="location"
-                            name="Location"
-                            placeholder="United States, California, London"
-                        >
-                    </div>
-                    
-                    <!-- Hidden tracking fields -->
-                    <input type="hidden" name="timestamp" id="timestamp">
-                    <input type="hidden" name="source" value="github_form_direct">
-                    <input type="hidden" name="form_method" value="html_post">
-                    
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="btn-text" id="btnText">Submit</span>
-                        <div class="loading" id="loading">
-                            <div class="spinner"></div>
-                        </div>
-                    </button>
-                </form>
+    <div class="form-container">
+        <div class="header">
+            <h1>🚀 Lead Generation</h1>
+            <p>Apollo AI ile kaliteli leads bulun</p>
+        </div>
+        
+        <form id="leadForm">
+            <div class="form-group">
+                <label for="jobTitle">👔 İş Unvanı</label>
+                <input type="text" id="jobTitle" name="Job Title" placeholder="Founder, Engineer, Owner" required>
             </div>
             
-            <!-- Hidden iframe to handle response -->
-            <iframe name="hiddenFrame" style="display:none;" onload="handleIframeLoad()"></iframe>
+            <div class="form-group">
+                <label for="companySize">🏢 Şirket Büyüklüğü</label>
+                <select id="companySize" name="Company Size" required>
+                    <option value="">Seçiniz...</option>
+                    <option value="1-10">1-10 çalışan</option>
+                    <option value="11-50">11-50 çalışan</option>
+                    <option value="51-200">51-200 çalışan</option>
+                    <option value="201-1000">201-1000 çalışan</option>
+                    <option value="1001-5000">1001-5000 çalışan</option>
+                    <option value="5001-10000">5001-10000 çalışan</option>
+                    <option value="10001-100000">10001+ çalışan</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="keywords">🔍 Anahtar Kelimeler</label>
+                <input type="text" id="keywords" name="Keywords" placeholder="AI, SaaS, Healthcare, Finance..." required>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">📍 Lokasyon</label>
+                <input type="text" id="location" name="Location" placeholder="United States, California, London..." required>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Leads Oluştur
+            </button>
+        </form>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Lead'leriniz oluşturuluyor... Bu işlem 2-3 dakika sürebilir.</p>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <h3>✅ Başarılı!</h3>
+            <p>Lead generation işlemi başlatıldı. Sonuçlar Google Sheet'inize aktarılacak.</p>
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            <h3>❌ Hata!</h3>
+            <p>Bir sorun oluştu. Lütfen tekrar deneyin veya destek ekibiyle iletişime geçin.</p>
+        </div>
+        
+        <div class="feature-list">
+            <div class="feature-item">
+                <i>⚡</i>
+                <span>Hızlı İşlem</span>
+            </div>
+            <div class="feature-item">
+                <i>🎯</i>
+                <span>Doğru Hedefleme</span>
+            </div>
+            <div class="feature-item">
+                <i>📊</i>
+                <span>Detaylı Analiz</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // N8N Webhook Configuration
-        const N8N_WEBHOOK = 'https://neuromexago.app.n8n.cloud/form/ba6e9c2d-ed5d-45f0-98c9-9a1c39496dd6';
-        let formSubmissionStarted = false;
-        
-        function handleFormSubmit() {
-            console.log('🚀 DIRECT FORM SUBMISSION TO N8N STARTED');
-            console.log('📡 N8N Webhook URL:', N8N_WEBHOOK);
+        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Set timestamp
-            document.getElementById('timestamp').value = new Date().toISOString();
-            
-            // Collect and log form data being sent
-            const formData = {
-                'Job Title': document.getElementById('jobTitle').value,
-                'Company Size': document.getElementById('companySize').value,
-                'Keywords': document.getElementById('keywords').value,
-                'Location': document.getElementById('location').value,
-                'timestamp': document.getElementById('timestamp').value,
-                'source': 'github_form_direct'
-            };
-            
-            console.log('📤 Form data being sent to N8N:', formData);
-            
-            // Show loading
             const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
             const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
             
-            submitBtn.disabled = true;
-            btnText.style.opacity = '0';
+            // Form verilerini topla
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Loading durumuna geç
+            submitBtn.style.display = 'none';
             loading.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
             
-            formSubmissionStarted = true;
-            
-            console.log('✅ Form will POST directly to N8N webhook (bypasses CORS)');
-            
-            // Show success after delay (since direct post works)
-            setTimeout(showSuccess, 3000);
-            
-            return true; // Allow form to submit to N8N
-        }
-        
-        function handleIframeLoad() {
-            if (formSubmissionStarted) {
-                console.log('📥 Iframe loaded - N8N webhook received the data!');
-                console.log('🎯 Check your N8N Executions tab now!');
-                setTimeout(showSuccess, 1000);
+            try {
+                // N8N webhook URL'i
+                const webhookUrl = 'https://neuromexago.app.n8n.cloud/form/ba6e9c2d-ed5d-45f0-98c9-9a1c39496dd6';
+                
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    loading.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    this.reset();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                submitBtn.style.display = 'block';
             }
-        }
-        
-        function showSuccess() {
-            console.log('✅ SUCCESS: Data successfully sent to N8N webhook!');
-            console.log('🚀 Your Apify workflow should now be running!');
-            
-            document.getElementById('formSection').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
-            
-            formSubmissionStarted = false;
-        }
-        
-        // Form validation
-        document.getElementById('jobTitle').addEventListener('input', validateForm);
-        document.getElementById('companySize').addEventListener('change', validateForm);
-        
-        function validateForm() {
-            const jobTitle = document.getElementById('jobTitle').value.trim();
-            const companySize = document.getElementById('companySize').value;
-            const submitBtn = document.getElementById('submitBtn');
-            
-            if (jobTitle.length >= 2 && companySize) {
-                submitBtn.style.opacity = '1';
-                submitBtn.disabled = false;
-            } else {
-                submitBtn.style.opacity = '0.7';
-                submitBtn.disabled = true;
-            }
-        }
-        
-        // Auto-resize textarea
-        document.getElementById('keywords').addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
         });
-        
-        // Test webhook connectivity on load
-        function testWebhook() {
-            console.log('🧪 Testing N8N webhook connectivity...');
-            console.log('📡 Webhook URL:', N8N_WEBHOOK);
-            console.log('✅ Webhook is accessible (confirmed via external test)');
-        }
-        
-        // Initial validation and webhook test
-        validateForm();
-        testWebhook();
-        
-        console.log('🎯 DIRECT HTML FORM METHOD LOADED');
-        console.log('📋 This method bypasses ALL CORS issues');
-        console.log('✅ Form will POST directly to your N8N webhook');
-        console.log('🔗 N8N URL:', N8N_WEBHOOK);
     </script>
 </body>
 </html>
